@@ -251,16 +251,18 @@ function loadChat(contactId) {
     chatHeaderName.textContent = contact.name;
     chatStatus.textContent = contact.isTyping ? 'печатает...' : contact.statusOffline;
 
+    // Полная очистка и пересоздание содержимого
     chatMessages.innerHTML = '';
     
+    // Сразу добавляем индикатор набора в DOM
+    chatMessages.appendChild(typingIndicatorContainer);
+
     // Показываем пустое состояние если нет сообщений
     if (contact.messages.length === 0) {
         showEmptyState(contact.name);
     } else {
         contact.messages.forEach(msg => addMessageToDOM(msg.text, msg.type, msg.time));
     }
-    
-    chatMessages.appendChild(typingIndicatorContainer);
 
     if (contact.isTyping) {
         typingIndicatorContainer.classList.remove('hidden');
