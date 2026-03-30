@@ -314,9 +314,12 @@ function addMessageToDOM(text, type, time) {
     timeElement.textContent = time || getCurrentTime();
     messageElement.appendChild(timeElement);
 
-    // Добавляем сообщение перед индикатором набора, если он есть в DOM
-    if (typingIndicatorContainer.parentNode === chatMessages) {
-        chatMessages.insertBefore(messageElement, typingIndicatorContainer);
+    // Всегда добавляем в конец, перед последним элементом (typing indicator)
+    const children = Array.from(chatMessages.children);
+    const typingIndicator = chatMessages.querySelector('#typing-indicator-container');
+    
+    if (typingIndicator) {
+        chatMessages.insertBefore(messageElement, typingIndicator);
     } else {
         chatMessages.appendChild(messageElement);
     }
