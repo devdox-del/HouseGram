@@ -312,7 +312,12 @@ function addMessageToDOM(text, type, time) {
     timeElement.textContent = time || getCurrentTime();
     messageElement.appendChild(timeElement);
 
-    chatMessages.insertBefore(messageElement, typingIndicatorContainer);
+    // Добавляем сообщение перед индикатором набора, если он есть в DOM
+    if (typingIndicatorContainer.parentNode === chatMessages) {
+        chatMessages.insertBefore(messageElement, typingIndicatorContainer);
+    } else {
+        chatMessages.appendChild(messageElement);
+    }
 
     scrollToBottom();
 }
