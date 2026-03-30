@@ -131,6 +131,7 @@ function toggleSideMenu() {
 
 // --- View Navigation ---
 function navigateToView(viewId, data = null) {
+    console.log('navigateToView called:', viewId, data);
     const previousView = activeView;
     activeView = viewId;
 
@@ -138,6 +139,7 @@ function navigateToView(viewId, data = null) {
     menuView.classList.add('hidden');
     chatView.classList.add('hidden');
     profileView.classList.add('hidden');
+    console.log('All views hidden');
 
     let targetView;
     switch (viewId) {
@@ -172,7 +174,9 @@ function navigateToView(viewId, data = null) {
     }
 
     // Показываем целевой вид
+    console.log('Showing target view:', targetView.id);
     targetView.classList.remove('hidden');
+    console.log('navigateToView completed');
 }
 
 function populateChatList() {
@@ -241,9 +245,14 @@ function toggleSendButton() {
 
 // --- Chat Functions ---
 function loadChat(contactId) {
-    if (!contacts[contactId]) return;
+    console.log('loadChat called with:', contactId);
+    if (!contacts[contactId]) {
+        console.error('Contact not found:', contactId);
+        return;
+    }
     const contact = contacts[contactId];
     currentChatId = contactId;
+    console.log('Contact loaded:', contact.name);
 
     chatHeaderAvatar.textContent = '';
     chatHeaderAvatar.dataset.initial = contact.initial;
@@ -253,14 +262,18 @@ function loadChat(contactId) {
 
     // Полная очистка и пересоздание содержимого
     chatMessages.innerHTML = '';
-    
+    console.log('chatMessages cleared');
+
     // Сразу добавляем индикатор набора в DOM
     chatMessages.appendChild(typingIndicatorContainer);
+    console.log('typingIndicatorContainer added');
 
     // Показываем пустое состояние если нет сообщений
     if (contact.messages.length === 0) {
+        console.log('Showing empty state');
         showEmptyState(contact.name);
     } else {
+        console.log('Loading messages:', contact.messages.length);
         contact.messages.forEach(msg => addMessageToDOM(msg.text, msg.type, msg.time));
     }
 
@@ -273,6 +286,7 @@ function loadChat(contactId) {
     scrollToBottom(true);
     toggleSendButton();
     messageInput.focus();
+    console.log('loadChat completed');
 }
 
 /**
