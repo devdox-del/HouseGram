@@ -40,38 +40,21 @@ body {
 .chat-container,
 .profile-container,
 .settings-container {
-    position: absolute; /* Allow overlaying */
+    position: fixed;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 420px; /* Common mobile width */
-    height: 100vh; /* Full height */
+    max-width: 420px;
+    height: 100vh;
     background-color: var(--tg-bg-light);
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-    overflow: hidden; /* Keep content contained */
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* For view transitions */
+    overflow: hidden;
     opacity: 1;
-}
-
-/* --- View Transitions --- */
-.view-enter {
-    transform: translateX(100%) translateX(-50%); /* Start off-screen right */
-    opacity: 0;
-}
-.view-enter-active {
-     transform: translateX(0) translateX(-50%); /* Slide in */
-     opacity: 1;
-}
-.view-exit {
-     transform: translateX(0) translateX(-50%); /* Start on-screen */
-     opacity: 1;
-}
-.view-exit-active {
-    transform: translateX(-100%) translateX(-50%); /* Slide out left */
-    opacity: 0;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 /* Make non-active views truly hidden for accessibility and interaction */
@@ -79,9 +62,8 @@ body {
 .chat-container.hidden,
 .profile-container.hidden,
 .settings-container.hidden {
-    display: none !important;
-    transform: translateX(100%) translateX(-50%);
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     z-index: 0;
 }

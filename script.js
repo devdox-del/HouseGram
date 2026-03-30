@@ -134,17 +134,10 @@ function navigateToView(viewId, data = null) {
     const previousView = activeView;
     activeView = viewId;
 
-    // Clear unread count when entering chat
-    if (viewId === 'chat' && data && contacts[data] && contacts[data].unread > 0) {
-        contacts[data].unread = 0;
-        // Update list item visually immediately if possible, or let populate handle it
-        const listItem = chatList.querySelector(`.chat-list-item[data-contact-id="${data}"] .unread-count`);
-        if (listItem) listItem.remove(); // Remove unread badge
-    }
-
-    menuView.classList.add('hidden', 'view-exit');
-    chatView.classList.add('hidden', 'view-exit');
-    profileView.classList.add('hidden', 'view-exit');
+    // Скрываем все виды сразу
+    menuView.classList.add('hidden');
+    chatView.classList.add('hidden');
+    profileView.classList.add('hidden');
 
     let targetView;
     switch (viewId) {
@@ -152,7 +145,6 @@ function navigateToView(viewId, data = null) {
             targetView = menuView;
             currentChatId = null;
             resetChatInput();
-            // Repopulate list to show potentially cleared unread counts
             populateChatList();
             break;
         case 'chat':
@@ -179,44 +171,8 @@ function navigateToView(viewId, data = null) {
             activeView = 'menu';
     }
 
-    targetView.classList.remove('hidden', 'view-exit', 'view-enter', 'view-enter-active', 'view-exit-active');
-
-    if (previousView === 'menu' && viewId === 'chat') {
-        targetView.classList.add('view-enter');
-    } else if (previousView === 'chat' && viewId === 'menu') {
-        targetView.classList.add('view-exit-active');
-        menuView.classList.remove('hidden', 'view-exit', 'view-exit-active');
-    } else if (previousView === 'chat' && viewId === 'profile') {
-        targetView.classList.add('view-enter');
-    } else if (previousView === 'profile' && viewId === 'chat') {
-        targetView.classList.add('view-exit-active');
-        chatView.classList.remove('hidden', 'view-exit', 'view-exit-active');
-    } else {
-        targetView.classList.remove('hidden');
-    }
-
-    requestAnimationFrame(() => {
-        if (targetView.classList.contains('view-enter')) {
-            targetView.classList.add('view-enter-active');
-        }
-    });
-
-    // Исправление для transitionend на скрытых элементах
-    const handleTransitionEnd = () => {
-        targetView.classList.remove('view-enter', 'view-enter-active', 'view-exit', 'view-exit-active');
-    };
-
-    // Если элемент уже видим, transitionend может не сработать — используем таймер
-    const transitionTimeout = setTimeout(handleTransitionEnd, 300);
-
-    targetView.addEventListener('transitionend', () => {
-        clearTimeout(transitionTimeout);
-        handleTransitionEnd();
-    }, { once: true });
-
-    if (viewId === 'chat' && previousView === 'profile') {
-        loadChat(currentChatId);
-    }
+    // Показываем целевой вид
+    targetView.classList.remove('hidden');
 }
 
 function populateChatList() {
