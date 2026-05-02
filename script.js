@@ -2,6 +2,7 @@
 const menuView = document.getElementById('menu-view');
 const chatView = document.getElementById('chat-view');
 const profileView = document.getElementById('profile-view');
+const settingsView = document.getElementById('settings-view');
 const chatList = document.getElementById('chat-list');
 const chatMessages = document.getElementById('chat-messages');
 const messageInput = document.getElementById('message-input');
@@ -20,11 +21,16 @@ const profileStatus = document.getElementById('profile-status');
 const profilePhone = document.getElementById('profile-phone');
 const profileBio = document.getElementById('profile-bio');
 const profileUsername = document.getElementById('profile-username');
+const settingsBackButton = document.getElementById('settings-back-button');
+const searchButton = document.getElementById('search-button');
+const newChatButton = document.getElementById('new-chat-button');
+const chatInputForm = document.getElementById('chat-input-form');
 
 // Side Menu Elements
 const hamburgerButton = document.getElementById('hamburger-button');
 const sideMenu = document.getElementById('side-menu');
 const menuOverlay = document.getElementById('menu-overlay');
+const sideMenuList = sideMenu ? sideMenu.querySelector('.side-menu-list') : null;
 
 // --- Contact Data ---
 const contacts = {
@@ -103,14 +109,52 @@ function escapeHtml(text) {
 
 // --- Event Listeners ---
 sendButton.addEventListener('click', sendMessage);
+sendButton.addEventListener('keydown', handleActivationKey(sendMessage));
 messageInput.addEventListener('keypress', handleInputKeypress);
 messageInput.addEventListener('input', toggleSendButton);
+if (chatInputForm) {
+    chatInputForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        sendMessage();
+    });
+}
 backButtonChat.addEventListener('click', () => navigateToView('menu'));
+backButtonChat.addEventListener('keydown', handleActivationKey(() => navigateToView('menu')));
 chatList.addEventListener('click', handleChatListClick);
+chatList.addEventListener('keydown', handleChatListKeydown);
 chatHeaderClickable.addEventListener('click', showProfileView);
-profileBackButton.addEventListener('click', () => navigateToView('chat', currentChatId));
+chatHeaderClickable.addEventListener('keydown', handleActivationKey(showProfileView));
+profileBackButton.addEventListener('click', handleProfileBack);
+profileBackButton.addEventListener('keydown', handleActivationKey(handleProfileBack));
 hamburgerButton.addEventListener('click', toggleSideMenu);
-menuOverlay.addEventListener('click', toggleSideMenu); // Close menu on overlay click
+hamburgerButton.addEventListener('keydown', handleActivationKey(toggleSideMenu));
+menuOverlay.addEventListener('click', closeSideMenu); // Close menu on overlay click
+if (sideMenuList) {
+    sideMenuList.addEventListener('click', handleSideMenuClick);
+    sideMenuList.addEventListener('keydown', handleSideMenuKeydown);
+    // Make side menu items keyboard-focusable
+    sideMenuList.querySelectorAll('li[data-action]').forEach((li) => {
+        li.setAttribute('tabindex', '0');
+        li.setAttribute('role', 'menuitem');
+    });
+}
+if (settingsBackButton) {
+    settingsBackButton.addEventListener('click', () => navigateToView('menu'));
+    settingsBackButton.addEventListener('keydown', handleActivationKey(() => navigateToView('menu')));
+}
+if (searchButton) {
+    searchButton.addEventListener('click', handleSearchClick);
+    searchButton.addEventListener('keydown', handleActivationKey(handleSearchClick));
+}
+if (newChatButton) {
+    newChatButton.addEventListener('click', handleNewChatClick);
+}
+// Close side menu on Escape key for accessibility
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sideMenu.classList.contains('open')) {
+        closeSideMenu();
+    }
+});
 
 // --- Initial Setup ---
 loadMessagesFromStorage();
@@ -121,25 +165,124 @@ navigateToView('menu');
 function toggleSideMenu() {
     const isOpen = sideMenu.classList.contains('open');
     if (isOpen) {
-        sideMenu.classList.remove('open');
-        menuOverlay.classList.remove('open');
+        closeSideMenu();
     } else {
-        sideMenu.classList.add('open');
-        menuOverlay.classList.add('open');
+        openSideMenu();
     }
+}
+
+function openSideMenu() {
+    sideMenu.classList.add('open');
+    menuOverlay.classList.add('open');
+}
+
+function closeSideMenu() {
+    sideMenu.classList.remove('open');
+    menuOverlay.classList.remove('open');
+}
+
+function handleSideMenuClick(event) {
+    const item = event.target.closest('li[data-action]');
+    if (!item) return;
+    handleSideMenuAction(item.dataset.action);
+}
+
+function handleSideMenuKeydown(event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const item = event.target.closest('li[data-action]');
+    if (!item) return;
+    event.preventDefault();
+    handleSideMenuAction(item.dataset.action);
+}
+
+function handleSideMenuAction(action) {
+    closeSideMenu();
+    switch (action) {
+        case 'settings':
+            navigateToView('settings');
+            break;
+        case 'saved-messages':
+            // Open chat with the only available contact as a placeholder for "Saved Messages".
+            if (contacts.durov) {
+                navigateToView('chat', 'durov');
+            }
+            break;
+        case 'new-group':
+        case 'contacts':
+        case 'calls':
+        case 'people-nearby':
+        case 'telegram-features':
+            showToast('Скоро будет доступно');
+            break;
+        default:
+            // No-op for unknown actions
+            break;
+    }
+}
+
+function handleProfileBack() {
+    if (currentChatId && contacts[currentChatId]) {
+        navigateToView('chat', currentChatId);
+    } else {
+        navigateToView('menu');
+    }
+}
+
+function handleSearchClick() {
+    showToast('Поиск пока не реализован');
+}
+
+function handleNewChatClick() {
+    showToast('Новый чат пока не доступен');
+}
+
+function handleActivationKey(action) {
+    return (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            action();
+        }
+    };
+}
+
+function handleChatListKeydown(event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const item = event.target.closest('.chat-list-item');
+    if (!item) return;
+    event.preventDefault();
+    const contactId = item.dataset.contactId;
+    if (contactId) navigateToView('chat', contactId);
+}
+
+// --- Lightweight toast notification (no external deps) ---
+let toastTimeoutId = null;
+function showToast(message) {
+    let toast = document.getElementById('hg-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'hg-toast';
+        toast.className = 'hg-toast';
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.classList.add('visible');
+    if (toastTimeoutId) clearTimeout(toastTimeoutId);
+    toastTimeoutId = setTimeout(() => {
+        toast.classList.remove('visible');
+    }, 2200);
 }
 
 // --- View Navigation ---
 function navigateToView(viewId, data = null) {
-    console.log('navigateToView called:', viewId, data);
-    const previousView = activeView;
     activeView = viewId;
 
     // Скрываем все виды сразу
     menuView.classList.add('hidden');
     chatView.classList.add('hidden');
     profileView.classList.add('hidden');
-    console.log('All views hidden');
+    if (settingsView) settingsView.classList.add('hidden');
 
     let targetView;
     switch (viewId) {
@@ -151,32 +294,65 @@ function navigateToView(viewId, data = null) {
             break;
         case 'chat':
             if (!data || !contacts[data]) {
-                console.error("Invalid chat ID:", data);
+                console.error('Invalid chat ID:', data);
                 navigateToView('menu');
                 return;
             }
             currentChatId = data;
+            // Mark messages as read when entering the chat
+            if (contacts[data].unread) {
+                contacts[data].unread = 0;
+                updateUnreadBadge(data);
+            }
             targetView = chatView;
             loadChat(currentChatId);
             break;
         case 'profile':
             if (!currentChatId || !contacts[currentChatId]) {
-                console.error("Cannot open profile without active chat:", currentChatId);
+                console.error('Cannot open profile without active chat:', currentChatId);
                 navigateToView('menu');
                 return;
             }
             targetView = profileView;
             loadProfile(currentChatId);
             break;
+        case 'settings':
+            if (!settingsView) {
+                navigateToView('menu');
+                return;
+            }
+            targetView = settingsView;
+            break;
         default:
             targetView = menuView;
             activeView = 'menu';
     }
 
-    // Показываем целевой вид
-    console.log('Showing target view:', targetView.id);
     targetView.classList.remove('hidden');
-    console.log('navigateToView completed');
+}
+
+/**
+ * Updates only the unread badge for a chat list item without rebuilding the list.
+ * @param {string} contactId - ID of the contact whose badge to update.
+ */
+function updateUnreadBadge(contactId) {
+    const contact = contacts[contactId];
+    if (!contact) return;
+    const listItem = chatList.querySelector(`.chat-list-item[data-contact-id="${contactId}"]`);
+    if (!listItem) return;
+    const metaElement = listItem.querySelector('.chat-list-meta');
+    if (!metaElement) return;
+    let unreadElement = metaElement.querySelector('.unread-count');
+    if (contact.unread > 0) {
+        if (!unreadElement) {
+            unreadElement = document.createElement('div');
+            unreadElement.classList.add('unread-count');
+            metaElement.appendChild(unreadElement);
+        }
+        unreadElement.textContent = contact.unread;
+    } else if (unreadElement) {
+        unreadElement.remove();
+    }
 }
 
 function populateChatList() {
@@ -196,6 +372,9 @@ function populateChatList() {
         const item = document.createElement('div');
         item.classList.add('chat-list-item');
         item.dataset.contactId = contact.id;
+        item.setAttribute('role', 'listitem');
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('aria-label', `Открыть чат с ${contact.name}`);
 
         const unreadBadge = contact.unread > 0
             ? `<div class="unread-count">${contact.unread}</div>`
@@ -245,14 +424,12 @@ function toggleSendButton() {
 
 // --- Chat Functions ---
 function loadChat(contactId) {
-    console.log('loadChat called with:', contactId);
     if (!contacts[contactId]) {
         console.error('Contact not found:', contactId);
         return;
     }
     const contact = contacts[contactId];
     currentChatId = contactId;
-    console.log('Contact loaded:', contact.name);
 
     chatHeaderAvatar.textContent = '';
     chatHeaderAvatar.dataset.initial = contact.initial;
@@ -262,18 +439,14 @@ function loadChat(contactId) {
 
     // Полная очистка и пересоздание содержимого
     chatMessages.innerHTML = '';
-    console.log('chatMessages cleared');
 
     // Сразу добавляем индикатор набора в DOM
     chatMessages.appendChild(typingIndicatorContainer);
-    console.log('typingIndicatorContainer added');
 
     // Показываем пустое состояние если нет сообщений
     if (contact.messages.length === 0) {
-        console.log('Showing empty state');
         showEmptyState(contact.name);
     } else {
-        console.log('Loading messages:', contact.messages.length);
         contact.messages.forEach(msg => addMessageToDOM(msg.text, msg.type, msg.time));
     }
 
@@ -286,7 +459,6 @@ function loadChat(contactId) {
     scrollToBottom(true);
     toggleSendButton();
     messageInput.focus();
-    console.log('loadChat completed');
 }
 
 /**
@@ -328,10 +500,8 @@ function addMessageToDOM(text, type, time) {
     timeElement.textContent = time || getCurrentTime();
     messageElement.appendChild(timeElement);
 
-    // Всегда добавляем в конец, перед последним элементом (typing indicator)
-    const children = Array.from(chatMessages.children);
+    // Всегда добавляем в конец, перед индикатором набора
     const typingIndicator = chatMessages.querySelector('#typing-indicator-container');
-    
     if (typingIndicator) {
         chatMessages.insertBefore(messageElement, typingIndicator);
     } else {
@@ -341,21 +511,30 @@ function addMessageToDOM(text, type, time) {
     scrollToBottom();
 }
 
-function updateChatListPreview(contactId, text, type) {
+/**
+ * Appends a message to a contact's history and persists it.
+ * @param {string} contactId
+ * @param {string} text
+ * @param {'sent'|'received'} type
+ * @param {string} time
+ */
+function pushMessage(contactId, text, type, time) {
+    const contact = contacts[contactId];
+    if (!contact) return;
+    contact.messages.push({ text, type, time });
+    saveMessagesToStorage();
+}
+
+/**
+ * Updates the visual chat-list item (preview/time/unread badge) for a contact.
+ * Does NOT modify the contact's messages array — callers should call pushMessage first.
+ */
+function updateChatListPreview(contactId, text, type, time) {
     const contact = contacts[contactId];
     if (!contact) return;
 
-    const timeString = getCurrentTime();
+    const timeString = time || getCurrentTime();
     const previewText = type === 'sent' ? `Вы: ${text}` : text;
-
-    // Add new message
-    contact.messages.push({ text, type, time: timeString });
-    saveMessagesToStorage(); // Сохраняем в localStorage
-
-    // Increment unread count if the chat is not currently open
-    if (currentChatId !== contactId && type === 'received') {
-        contact.unread = (contact.unread || 0) + 1;
-    }
 
     // Find the list item
     const listItem = chatList.querySelector(`.chat-list-item[data-contact-id="${contactId}"]`);
@@ -373,22 +552,23 @@ function updateChatListPreview(contactId, text, type) {
         }
 
         // Update or add unread badge
-        let unreadElement = metaElement.querySelector('.unread-count');
-        if (contact.unread > 0) {
-            if (!unreadElement) {
-                unreadElement = document.createElement('div');
-                unreadElement.classList.add('unread-count');
-                metaElement.appendChild(unreadElement);
+        if (metaElement) {
+            let unreadElement = metaElement.querySelector('.unread-count');
+            if (contact.unread > 0) {
+                if (!unreadElement) {
+                    unreadElement = document.createElement('div');
+                    unreadElement.classList.add('unread-count');
+                    metaElement.appendChild(unreadElement);
+                }
+                unreadElement.textContent = contact.unread;
+            } else if (unreadElement) {
+                unreadElement.remove();
             }
-            unreadElement.textContent = contact.unread;
-        } else if (unreadElement) {
-            unreadElement.remove();
         }
 
         // Move the updated item to the top
         chatList.prepend(listItem);
     } else {
-        console.warn("Chat list item not found for update:", contactId);
         // Regenerate the list if item wasn't found (less efficient but ensures consistency)
         populateChatList();
     }
@@ -404,7 +584,8 @@ function sendMessage() {
 
     const timeString = getCurrentTime();
     addMessageToDOM(messageText, 'sent', timeString);
-    updateChatListPreview(currentChatId, messageText, 'sent');
+    pushMessage(currentChatId, messageText, 'sent', timeString);
+    updateChatListPreview(currentChatId, messageText, 'sent', timeString);
     messageInput.value = '';
     toggleSendButton();
 
@@ -432,16 +613,16 @@ function simulateTypingAndResponse(contactId, userMessage) {
         const response = contact.generateResponse(userMessage);
         const responseTime = getCurrentTime();
 
-        contact.messages.push({ type: 'received', text: response, time: responseTime });
+        // Persist message exactly once
+        pushMessage(contactId, response, 'received', responseTime);
 
         if (currentChatId === contactId) {
             addMessageToDOM(response, 'received', responseTime);
-            updateChatListPreview(contactId, response, 'received'); // Still update list for time/preview
         } else {
-            // Only update list data if chat is not open (increments unread count)
-             contacts[contactId].unread = (contacts[contactId].unread || 0) + 1;
-            updateChatListPreview(contactId, response, 'received');
+            // Only increment unread when chat is not currently open
+            contact.unread = (contact.unread || 0) + 1;
         }
+        updateChatListPreview(contactId, response, 'received', responseTime);
 
         contact.isTyping = false;
         if (currentChatId === contactId) {
@@ -555,20 +736,24 @@ function getCurrentTime() {
 // Helper function to parse time for sorting (basic implementation)
 function parseTime(timeString) {
     if (!timeString) return 0;
-    if (timeString.toLowerCase() === 'yesterday') return new Date().setHours(0, 0, 0, 0) - 86400000; // Approx yesterday midnight
+    const lower = timeString.toLowerCase();
+    if (lower === 'yesterday' || lower === 'вчера') {
+        return new Date().setHours(0, 0, 0, 0) - 86400000; // Approx yesterday midnight
+    }
     if (timeString.includes(':')) {
         const [hours, minutes] = timeString.split(':').map(Number);
+        if (Number.isNaN(hours) || Number.isNaN(minutes)) return 0;
         const date = new Date();
         date.setHours(hours, minutes, 0, 0);
         // If the time is in the future compared to now, assume it's from yesterday
         if (date > new Date()) {
-             date.setDate(date.getDate() - 1);
+            date.setDate(date.getDate() - 1);
         }
         return date.getTime();
     }
     // Handle historical dates or other formats crudely
-    if (/\d{4}/.test(timeString)) { // If it looks like a year
-        return new Date(timeString, 0, 1).getTime(); // Treat as Jan 1st of that year
+    if (/^\d{4}$/.test(timeString)) { // If it looks like a year
+        return new Date(parseInt(timeString, 10), 0, 1).getTime();
     }
     return 0; // Default for unparseable formats
 }
