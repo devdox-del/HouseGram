@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Чат с известными личностями</title>
-    <link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA/9AAAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//">
+    <title>HouseGram — мессенджер</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23517da2'/%3E%3Cpath d='M8 14l9-5 7 14-7-3-2 5-2-7-5-4z' fill='white'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,8 +13,8 @@
 <body>
     <!-- Slide-out Side Menu -->
     <nav class="side-menu" id="side-menu" role="menu" aria-label="Боковое меню">
-        <div class="side-menu-header" id="side-menu-user-profile-button">
-            <div class="avatar avatar-placeholder side-menu-avatar" data-initial="В" aria-hidden="true"></div> 
+        <div class="side-menu-header" id="side-menu-user-profile-button" role="button" tabindex="0">
+            <div class="avatar avatar-placeholder side-menu-avatar" data-initial="В" aria-hidden="true"></div>
             <div class="side-menu-user-info">
                 <div class="side-menu-user-name">Ваше Имя</div>
                 <div class="side-menu-user-phone">+7 9XX XXX XX XX</div>
@@ -22,59 +22,64 @@
         </div>
         <ul class="side-menu-list">
             <li data-action="new-group">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 18.2783C17.4406 17.4398 16.5653 16.8333 15.5 16.8333H8.5C7.43469 16.8333 6.55938 17.4398 6 18.2783M15 13.1667C15 14.83 13.6569 16.1667 12 16.1667C10.3431 16.1667 9 14.83 9 13.1667C9 11.5034 10.3431 10.1667 12 10.1667C13.6569 10.1667 15 11.5034 15 13.1667ZM12 8.5C10.067 8.5 8.5 6.933 8.5 5C8.5 3.067 10.067 1.5 12 1.5C13.933 1.5 15.5 3.067 15.5 5C15.5 6.933 13.933 8.5 12 8.5ZM19.5 10.1667C19.5 11.83 20.8431 13.1667 22.5 13.1667C24.1569 13.1667 25.5 11.83 25.5 10.1667C25.5 8.5034 24.1569 7.16667 22.5 7.16667C20.8431 7.16667 19.5 8.5034 19.5 10.1667ZM4.5 10.1667C4.5 11.83 3.15685 13.1667 1.5 13.1667C-0.156854 13.1667 -1.5 11.83 -1.5 10.1667C-1.5 8.5034 -0.156854 7.16667 1.5 7.16667C3.15685 7.16667 4.5 8.5034 4.5 10.1667Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Новая группа</span>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="newGroup">Новая группа</span>
             </li>
-             <li data-action="contacts">
-                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 11.5C14.2091 11.5 16 9.70914 16 7.5C16 5.29086 14.2091 3.5 12 3.5C9.79086 3.5 8 5.29086 8 7.5C8 9.70914 9.79086 11.5 12 11.5ZM12 13.5C8.13401 13.5 5 15.4591 5 18V19.5H19V18C19 15.4591 15.866 13.5 12 13.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Контакты</span>
+            <li data-action="contacts">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+                <span data-i18n="contacts">Контакты</span>
             </li>
-             <li data-action="calls">
-                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.5 14C16.5 14.8856 16.5 15.3284 16.361 15.6763C16.1551 16.1809 15.7877 16.5723 15.337 16.7848C14.8855 17 14.413 17 13.5 17C12.587 17 12.1145 17 11.663 16.7848C11.2123 16.5723 10.8449 16.1809 10.639 15.6763C10.5 15.3284 10.5 14.8856 10.5 14V10C10.5 9.11438 10.5 8.67157 10.639 8.32369C10.8449 7.81913 11.2123 7.42767 11.663 7.21518C12.1145 7 12.587 7 13.5 7C14.413 7 14.8855 7 15.337 7.21518C15.7877 7.42767 16.1551 7.81913 16.361 8.32369C16.5 8.67157 16.5 9.11438 16.5 10M16.5 14H18.75C19.9926 14 21 12.903 21 11.5C21 10.097 19.9926 9 18.75 9H16.5M6 9H8.25C9.49264 9 10.5 10.097 10.5 11.5C10.5 12.903 9.49264 14 8.25 14H6M6 9L4 7M6 9L4 11M6 14L4 12M6 14L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Звонки</span>
+            <li data-action="calls">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="calls">Звонки</span>
             </li>
-             <li data-action="people-nearby">
-                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12ZM12 12C17 12 21 15 21 18H3C3 15 7 12 12 12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 21C12.5523 21 13 20.5523 13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20C11 20.5523 11.4477 21 12 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 21C17.5523 21 18 20.5523 18 20C18 19.4477 17.5523 19 17 19C16.4477 19 16 19.4477 16 20C16 20.5523 16.4477 21 17 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 21C7.55228 21 8 20.5523 8 20C8 19.4477 7.55228 19 7 19C6.44772 19 6 19.4477 6 20C6 20.5523 6.44772 21 7 21Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Люди рядом</span>
+            <li data-action="people-nearby">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+                <span data-i18n="peopleNearby">Люди рядом</span>
             </li>
-             <li data-action="saved-messages">
-                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 5.5L12 12.5L19 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12.5L12 19.5L19 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Избранное</span>
+            <li data-action="saved-messages">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="savedMessages">Избранное</span>
             </li>
-             <li data-action="settings">
-                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15.0006C14.023 15.0006 15.6493 15.4868 16.8699 16.1909C17.411 16.4972 17.6815 16.6492 17.8186 16.8341C17.9387 17.0014 18.0036 17.1914 18.0036 17.3882C18.0036 17.5849 17.9387 17.7749 17.8186 17.9422C17.6815 18.1271 17.411 18.2791 16.8699 18.5854C15.6493 19.2895 14.023 19.7756 12 19.7756C9.97704 19.7756 8.3507 19.2895 7.13012 18.5854C6.58902 18.2791 6.31846 18.1271 6.18141 17.9422C6.06128 17.7749 5.99642 17.5849 5.99642 17.3882C5.99642 17.1914 6.06128 17.0014 6.18141 16.8341C6.31846 16.6492 6.58902 16.4972 7.13012 16.1909C8.3507 15.4868 9.97704 15.0006 12 15.0006Z" stroke="currentColor" stroke-width="1.5"/><path d="M12 12.2244C13.8743 12.2244 15.4 10.7974 15.4 9.02439C15.4 7.25139 13.8743 5.82439 12 5.82439C10.1257 5.82439 8.6 7.25139 8.6 9.02439C8.6 10.7974 10.1257 12.2244 12 12.2244Z" stroke="currentColor" stroke-width="1.5"/></svg>
-                <span>Настройки</span>
+            <li data-action="settings">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="settings">Настройки</span>
             </li>
             <li data-action="telegram-features">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8H12.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Возможности Telegram</span>
-             </li>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span data-i18n="telegramFeatures">Возможности Telegram</span>
+            </li>
         </ul>
     </nav>
-    <!-- Overlay for Side Menu -->
     <div class="menu-overlay" id="menu-overlay" aria-hidden="true"></div>
 
     <!-- Menu / Chat List View -->
     <main class="menu-container" id="menu-view" role="main" aria-label="Список чатов">
         <div class="menu-header">
-             <svg class="menu-hamburger icon-button" id="hamburger-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Открыть меню" role="button" tabindex="0">
+            <svg class="menu-hamburger icon-button" id="hamburger-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Открыть меню" role="button" tabindex="0">
                 <path d="M4 6H20M4 12H20M4 18H20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <div class="menu-title">Чаты</div>
-             <svg class="search-icon icon-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <div class="menu-title" data-i18n="chats">Чаты</div>
+            <svg class="search-icon icon-button" id="search-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Поиск" role="button" tabindex="0">
                 <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M21 21L16.65 16.65" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
-        <div class="chat-list" id="chat-list" role="list" aria-label="Список чатов">
-            <!-- Чаты загружаются динамически из script.js -->
+        <div class="search-bar" id="search-bar">
+            <input type="text" id="search-input" placeholder="Поиск" data-i18n-placeholder="searchPlaceholder" aria-label="Поиск" />
+            <button id="search-close" class="icon-button" aria-label="Закрыть поиск" type="button">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
         </div>
-         <button class="new-chat-button icon-button" aria-label="Новый чат">
-             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="chat-list" id="chat-list" role="list" aria-label="Список чатов">
+            <!-- Чаты загружаются динамически -->
+        </div>
+        <button class="new-chat-button icon-button" id="new-chat-button" aria-label="Новый чат" type="button">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 5V19M5 12H19" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </button>
-    </div>
+    </main>
 
     <!-- Chat View -->
     <div class="chat-container hidden" id="chat-view" role="main" aria-label="Окно чата">
@@ -89,39 +94,50 @@
             </div>
         </div>
         <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-label="Сообщения чата">
-              <!-- Messages will be loaded dynamically -->
-              <!-- Typing indicator structure -->
-              <div class="message message-received typing-indicator hidden" id="typing-indicator-container" aria-label="Печатает">
-                  <div class="typing-indicator-dots">
-                      <div class="dot-flashing"></div>
-                  </div>
-                 <!-- Timestamp will be hidden for typing -->
-                 <!-- <div class="message-time"></div> -->
+            <div class="message message-received typing-indicator hidden" id="typing-indicator-container" aria-label="Печатает">
+                <div class="typing-indicator-dots">
+                    <div class="dot-flashing"></div>
+                </div>
             </div>
         </div>
+        <div class="blocked-banner hidden" id="blocked-banner" data-i18n="blocked">Контакт заблокирован</div>
         <div class="chat-input-area" role="form" aria-label="Ввод сообщения">
-             <svg class="attach-icon icon-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                 <path d="M10 14.5L10 6.5C10 4.567 11.567 3 13.5 3C15.433 3 17 4.567 17 6.5V14.5C17 17.5376 14.5376 20 11.5 20C8.46243 20 6 17.5376 6 14.5V7.5C6 6.11929 7.11929 5 8.5 5C9.88071 5 11 6.11929 11 7.5V14.5" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <button class="attach-icon icon-button" id="attach-button" aria-label="Прикрепить" type="button">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <div class="attach-menu" id="attach-menu" role="menu">
+                <button class="attach-menu-item" id="attach-image-btn" type="button">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span data-i18n="attachImage">Изображение</span>
+                </button>
+                <button class="attach-menu-item" id="attach-emoji-btn" type="button">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span data-i18n="attachEmoji">Эмодзи</span>
+                </button>
+            </div>
+            <input type="file" id="image-input" accept="image/*" hidden>
+            <input type="text" id="message-input" placeholder="Сообщение" data-i18n-placeholder="messagePlaceholder" aria-label="Введите сообщение">
+            <div class="emoji-picker" id="emoji-picker" role="menu" aria-label="Эмодзи"></div>
+            <svg class="send-button icon-button hidden" id="send-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Отправить" role="button" tabindex="0">
+                <path d="M9.78798 13.553L21.113 2.88699M21.113 2.88699L16.514 21.113L12.503 15.058L9.78798 13.553M21.113 2.88699L9.78798 13.553" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <input type="text" id="message-input" placeholder="Сообщение" aria-label="Введите сообщение">
-             <svg class="send-button icon-button hidden" id="send-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Отправить" role="button" tabindex="0">
-                 <path d="M9.78798 13.553L21.113 2.88699M21.113 2.88699L16.514 21.113L12.503 15.058L9.78798 13.553M21.113 2.88699L9.78798 13.553" stroke="#007AFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-             </svg>
-             <svg class="mic-button icon-button" id="mic-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> 
-                <path d="M12 19C14.2091 19 16 17.2091 16 15V9C16 6.79086 14.2091 5 12 5C9.79086 5 8 6.79086 8 9V15C8 17.2091 9.79086 19 12 19Z" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> 
-                <path d="M4 11C4 15.4183 7.58172 19 12 19C16.4183 19 20 15.4183 20 11" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> 
-                <path d="M12 19V21" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> 
+            <svg class="mic-button icon-button" id="mic-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 19C14.2091 19 16 17.2091 16 15V9C16 6.79086 14.2091 5 12 5C9.79086 5 8 6.79086 8 9V15C8 17.2091 9.79086 19 12 19Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 11C4 15.4183 7.58172 19 12 19C16.4183 19 20 15.4183 20 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 19V21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
     </div>
 
     <!-- Profile View -->
     <div class="profile-container hidden" id="profile-view" role="dialog" aria-label="Профиль пользователя">
-         <div class="profile-header">
-             <svg class="back-arrow icon-button" id="profile-back-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Назад" role="button" tabindex="0">
+        <div class="profile-header">
+            <svg class="back-arrow icon-button" id="profile-back-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Назад" role="button" tabindex="0">
                 <path d="M15 18L9 12L15 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <div class="profile-header-title">Инфо</div>
+            <div class="profile-header-title" data-i18n="info">Инфо</div>
         </div>
         <div class="profile-content">
             <div class="profile-top-section">
@@ -133,73 +149,120 @@
             </div>
 
             <div class="profile-info-section">
-                 <div class="profile-info-item">
-                    <span class="profile-info-label">Телефон</span>
+                <div class="profile-info-item">
+                    <span class="profile-info-label" data-i18n="phoneLabel">Телефон</span>
                     <span class="profile-info-value" id="profile-phone">+7 999 *** ****</span>
                 </div>
-                 <div class="profile-info-item">
-                    <span class="profile-info-label">О себе</span>
+                <div class="profile-info-item">
+                    <span class="profile-info-label" data-i18n="bioLabel">О себе</span>
                     <span class="profile-info-value" id="profile-bio">Создатель Telegram и VK.</span>
                 </div>
-                 <div class="profile-info-item">
-                    <span class="profile-info-label">Имя пользователя</span>
+                <div class="profile-info-item">
+                    <span class="profile-info-label">Username</span>
                     <span class="profile-info-value" id="profile-username">@durov</span>
                 </div>
             </div>
 
             <div class="profile-actions">
-                <button class="profile-action-button" style="width: 100%;">Отправить сообщение</button>
-                <button class="profile-action-button" style="width: 100%;">Поделиться контактом</button> 
-                <button class="profile-action-button red" style="width: 100%;">Заблокировать</button>
+                <button class="profile-action-button" id="profile-send-message" type="button" data-i18n="sendMessage">Отправить сообщение</button>
+                <button class="profile-action-button" id="profile-share-contact" type="button" data-i18n="shareContact">Поделиться контактом</button>
+                <button class="profile-action-button red" id="profile-block" type="button" data-i18n="block">Заблокировать</button>
             </div>
         </div>
     </div>
 
     <!-- Settings View -->
     <div class="settings-container hidden" id="settings-view" role="dialog" aria-label="Настройки">
-         <div class="settings-header">
-             <svg class="back-arrow icon-button" id="settings-back-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Назад" role="button" tabindex="0">
+        <div class="settings-header">
+            <svg class="back-arrow icon-button" id="settings-back-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Назад" role="button" tabindex="0">
                 <path d="M15 18L9 12L15 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <div class="settings-header-title">Настройки</div>
+            <div class="settings-header-title" data-i18n="settings">Настройки</div>
         </div>
         <div class="settings-content">
-            <div class="settings-section">
-                 <div class="settings-item">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                     <span>Уведомления и звуки</span>
-                 </div>
-                 <div class="settings-item">
-                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 21V17C18 15.8954 17.1046 15 16 15H8C6.89543 15 6 15.8954 6 17V21" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12C21 14.2091 19.2091 16 17 16C14.7909 16 13 14.2091 13 12C13 9.79086 14.7909 8 17 8C19.2091 8 21 9.79086 21 12Z" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                     <span>Конфиденциальность</span>
-                 </div>
-                 <div class="settings-item">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8V12L15 15" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                     <span>Данные и память</span>
-                 </div>
+            <div class="settings-user-block" id="settings-edit-profile" role="button" tabindex="0">
+                <div class="avatar avatar-placeholder settings-user-avatar" id="settings-user-avatar" data-initial="В" style="background-color:#ff9800;"></div>
+                <div>
+                    <div class="settings-user-name" id="settings-user-name">Ваше Имя</div>
+                    <div class="settings-user-phone" id="settings-user-phone">+7 9XX XXX XX XX</div>
+                </div>
+                <span class="settings-user-edit" data-i18n="editProfile">Редактировать профиль</span>
             </div>
+
             <div class="settings-section">
-                <div class="settings-item">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21C15.866 21 19 17.866 19 14C19 10.134 15.866 7 12 7C8.13401 7 5 10.134 5 14C5 17.866 8.13401 21 12 21Z" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7V3" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 14H2" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 14H22" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.75 8.75L4 6" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.25 8.75L20 6" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                     <span>Оформление</span>
-                 </div>
-                 <div class="settings-item">
-                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 5H11M7 11H11M11 5C11 7.20914 9.20914 9 7 9C4.79086 9 3 7.20914 3 5C3 2.79086 4.79086 1 7 1C9.20914 1 11 2.79086 11 5ZM4 5V11" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 19H21M17.5 13H21M21 13C21 15.2091 19.2091 17 17 17C14.7909 17 13 15.2091 13 13C13 10.7909 14.7909 9 17 9C19.2091 9 21 10.7909 21 13ZM14 19V13" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>Язык</span>
-                 </div>
+                <div class="settings-item settings-item--toggle">
+                    <span data-i18n="theme">Тёмная тема</span>
+                    <label class="switch">
+                        <input type="checkbox" id="settings-theme-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item settings-item--toggle">
+                    <span data-i18n="notifications">Уведомления и звуки</span>
+                    <label class="switch">
+                        <input type="checkbox" id="settings-notif-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item settings-item--select">
+                    <span data-i18n="language">Язык</span>
+                    <select id="settings-lang-select">
+                        <option value="ru">Русский</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
             </div>
-             <div class="settings-section">
-                 <div class="settings-item">
-                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16V12" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8H12.01" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                     <span>Помощь</span>
-                 </div>
-                 <div class="settings-item">
-                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 8H12.01" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 12H12V16H13" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z" stroke="#8E8E93" stroke-width="1.5"/></svg>
-                     <span>Вопросы о Telegram</span>
-                 </div>
+
+            <div class="settings-section">
+                <button class="settings-item settings-item--button red" id="settings-clear-data" type="button">
+                    <span data-i18n="clearData">Очистить все чаты</span>
+                </button>
+            </div>
+
+            <div class="settings-section">
+                <div class="settings-item settings-item--info">
+                    <span data-i18n="about">О HouseGram</span>
+                    <span class="settings-version">v2.0.0</span>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Edit Profile View -->
+    <div class="settings-container hidden" id="edit-profile-view" role="dialog" aria-label="Редактирование профиля">
+        <div class="settings-header">
+            <svg class="back-arrow icon-button" id="edit-profile-back-button" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Назад" role="button" tabindex="0">
+                <path d="M15 18L9 12L15 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="settings-header-title" data-i18n="editProfile">Редактировать профиль</div>
+            <button id="edit-profile-save-button" class="header-text-button" type="button" data-i18n="save">Сохранить</button>
+        </div>
+        <div class="settings-content">
+            <div class="settings-section">
+                <label class="form-row">
+                    <span class="form-label" data-i18n="nameLabel">Имя</span>
+                    <input id="edit-name" type="text" maxlength="64" />
+                </label>
+                <label class="form-row">
+                    <span class="form-label" data-i18n="phoneLabel">Телефон</span>
+                    <input id="edit-phone" type="text" maxlength="32" />
+                </label>
+                <label class="form-row">
+                    <span class="form-label" data-i18n="bioLabel">О себе</span>
+                    <textarea id="edit-bio" rows="3" maxlength="160"></textarea>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay" aria-hidden="true"></div>
+
+    <!-- Context menu (long press / right click) -->
+    <div class="context-menu" id="context-menu" role="menu"></div>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
     <script src="script.js" defer></script>
 </body>
